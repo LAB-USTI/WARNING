@@ -5,13 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Warning</title>
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevent scrolling */
+        }
         body {
-            background: #fffbe6;
+            background: #1a1a1a;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
+            width: 100vw;
             font-family: Arial, sans-serif;
         }
         .warning-box {
@@ -26,7 +32,7 @@
             width: 50%;
         }
         .warning-icon {
-            font-size: 10rem;
+            font-size: 15rem;
             color: #d97706;
             margin-right: 3rem;
         }
@@ -34,6 +40,12 @@
             font-size: 2rem;
             color: #7c4700;
             font-weight: bold;
+        }
+        #timer {
+            font-size: 3rem;
+            color: #b91c1c;
+            font-weight: bold;
+            margin-left: 0.5rem;
         }
     </style>
 </head>
@@ -49,7 +61,29 @@
                 <li>Menonton film</li>
             </ul>
             <span class="warning-text">Agar tercipta suasana belajar yang kondusif dan tertib.</span>
+            <div id="countdown-warning" style="width:100%; margin-top:2rem;">
+                <span style="font-size:1.5rem; color:#b91c1c; font-weight:bold;">
+                    Jika beberapa program tidak ditutup, komputer Anda dapat dimatikan oleh administrator dalam <br><span id="timer">02:00</span>
+                </span>
+            </div>
         </div>
     </div>
+    <script>
+        let seconds = 120;
+        const timerSpan = document.getElementById('timer');
+        const warningDiv = document.getElementById('countdown-warning');
+        const interval = setInterval(() => {
+            seconds--;
+            const min = String(Math.floor(seconds / 60)).padStart(2, '0');
+            const sec = String(seconds % 60).padStart(2, '0');
+            timerSpan.textContent = `${min}:${sec}`;
+            if (seconds <= 0) {
+                clearInterval(interval);
+                warningDiv.innerHTML = `<span style="font-size:2rem; color:#b91c1c; font-weight:bold;">
+                    Komputer Anda dapat dimatikan oleh administrator sekarang!
+                </span>`;
+            }
+        }, 1000);
+    </script>
 </body>
 </html>
